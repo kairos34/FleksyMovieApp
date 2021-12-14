@@ -22,7 +22,7 @@ data class MovieDto(
     val overview: String,
     val popularity: Double,
     @SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerializedName("vote_average")
     val voteAverage: Double,
     @SerializedName("vote_count")
@@ -33,7 +33,8 @@ fun MovieDto.toMovie() = Movie(
     id = id,
     name = originalName,
     vote = voteAverage,
-    posterPath = posterPath
+    posterPath = posterPath,
+    date = firstAirDate
 )
 
 fun MovieDto.toMovieDetail() = MovieDetail(
@@ -41,5 +42,6 @@ fun MovieDto.toMovieDetail() = MovieDetail(
     name = originalName,
     vote = voteAverage,
     posterPath = posterPath,
-    overview = overview
+    overview = overview,
+    date = firstAirDate
 )

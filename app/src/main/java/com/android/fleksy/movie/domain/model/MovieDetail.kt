@@ -4,6 +4,7 @@ data class MovieDetail(
     val id: Int,
     val name: String,
     val vote: Double,
-    val posterPath: String,
-    val overview: String
+    val posterPath: String?,
+    val overview: String,
+    val date: String
 )

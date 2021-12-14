@@ -1,27 +1,38 @@
 package com.android.fleksy.movie.domain.usecases
 
-import com.android.fleksy.movie.common.Resource
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.android.fleksy.movie.data.remote.dto.toMovie
 import com.android.fleksy.movie.domain.model.Movie
 import com.android.fleksy.movie.domain.repository.MovieRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
 class GetMoviesUseCase @Inject constructor(
     private val repository: MovieRepository
-) {
-    operator fun invoke(): Flow<Resource<List<Movie>>> = flow {
-        try {
-            emit(Resource.Loading<List<Movie>>())
-            val movies = repository.getMovies().movies.map { it.toMovie() }
-            emit(Resource.Success<List<Movie>>(movies))
-        } catch (e: HttpException) {
-            emit(Resource.Error<List<Movie>>(e.localizedMessage ?: "An unexpected error occured"))
-        } catch (e: IOException) {
-            emit(Resource.Error<List<Movie>>("Couldn't reach server. Check your internet connection."))
+) : PagingSource<Int, Movie>() {
+
+    override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
+    }
+
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
+        return try {
+            val nextPage = params.key ?: 1
+            val movieListResponse = repository.getMovies(nextPage)
+            LoadResult.Page(
+                data = movieListResponse.movies.map { it.toMovie() },
+                prevKey = if (nextPage == 1) null else nextPage - 1,
+                nextKey = movieListResponse.page.plus(1)
+            )
+        } catch (exception: IOException) {
+            LoadResult.Error(exception)
+        } catch (exception: HttpException) {
+            LoadResult.Error(exception)
         }
     }
 }

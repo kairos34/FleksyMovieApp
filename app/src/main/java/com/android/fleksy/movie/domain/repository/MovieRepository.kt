@@ -4,7 +4,7 @@ import com.android.fleksy.movie.data.remote.dto.MovieListDto
 
 interface MovieRepository {
 
-    suspend fun getMovies(): MovieListDto
+    suspend fun getMovies(page: Int): MovieListDto
 
     suspend fun getSimilarMovies(tvId: Int): MovieListDto
 }
