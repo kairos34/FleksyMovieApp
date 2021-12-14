@@ -39,6 +39,7 @@ fun MovieListItem(
             data = "${Constants.SMALL_IMAGE_URL}${movie.posterPath}",
             builder = {
                 placeholder(R.drawable.placeholder)
+                fallback(R.drawable.placeholder)
             }
         )
         Image(
