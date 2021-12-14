@@ -16,7 +16,7 @@ class GetSimilarMoviesUseCase @Inject constructor(
     operator fun invoke(tvId: Int): Flow<Resource<List<MovieDetail>>> = flow {
         try {
             emit(Resource.Loading<List<MovieDetail>>())
-            val movies = repository.getSimilarMovies(tvId).results.map { it.toMovieDetail() }
+            val movies = repository.getSimilarMovies(tvId).movies.map { it.toMovieDetail() }
             emit(Resource.Success<List<MovieDetail>>(movies))
         } catch (e: HttpException) {
             emit(

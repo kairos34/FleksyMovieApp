@@ -4,7 +4,7 @@ import com.android.fleksy.movie.domain.model.Movie
 import com.android.fleksy.movie.domain.model.MovieDetail
 import com.google.gson.annotations.SerializedName
 
-data class ResultDto(
+data class MovieDto(
     @SerializedName("backdrop_path")
     val backdropPath: String,
     @SerializedName("first_air_date")
@@ -29,14 +29,14 @@ data class ResultDto(
     val voteCount: Int
 )
 
-fun ResultDto.toMovie() = Movie(
+fun MovieDto.toMovie() = Movie(
     id = id,
     name = originalName,
     vote = voteAverage,
     posterPath = posterPath
 )
 
-fun ResultDto.toMovieDetail() = MovieDetail(
+fun MovieDto.toMovieDetail() = MovieDetail(
     id = id,
     name = originalName,
     vote = voteAverage,
