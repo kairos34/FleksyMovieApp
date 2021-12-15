@@ -17,7 +17,13 @@ class MovieListViewModel @Inject constructor(
     private val getMoviesUseCase: GetMoviesUseCase
 ) : ViewModel() {
 
-    fun getMovies(): Flow<PagingData<Movie>> = Pager(
+    private var paginatedMovies: Flow<PagingData<Movie>>? = null
+
+    fun getMovies(): Flow<PagingData<Movie>> = paginatedMovies?.run {
+        this
+    } ?: Pager(
         PagingConfig(pageSize = 20),
-        pagingSourceFactory = { getMoviesUseCase }).flow.cachedIn(viewModelScope)
+        pagingSourceFactory = { getMoviesUseCase }).flow.cachedIn(viewModelScope).apply {
+        paginatedMovies = this
+    }
 }
