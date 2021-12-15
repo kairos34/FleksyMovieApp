@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -68,11 +69,12 @@ fun MovieDetailItem(movie: Movie) {
                     modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp, vertical = 4.dp)) {
                     Text(
                         text = if (movie.overview.isNotEmpty()) movie.overview else "Overview not found!",
+                        color = if (movie.overview.isNotEmpty()) Color.Unspecified else Color.Red,
                         modifier = Modifier
                             .padding(8.dp)
                             .weight(1f)
                             .verticalScroll(rememberScrollState(0)),
-                        style = typography.subtitle2.copy(fontSize = 10.sp)
+                        style = typography.subtitle2.copy(fontSize = 12.sp)
                     )
                 }
             }
