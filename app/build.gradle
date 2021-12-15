@@ -12,8 +12,8 @@ android {
         applicationId "com.android.fleksy.movie"
         minSdk 21
         targetSdk 31
-        versionCode 107
-        versionName "1.0.7"
+        versionCode 108
+        versionName "1.0.8"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -89,7 +89,4 @@ dependencies {
 
     // UI Pager
     implementation "com.google.accompanist:accompanist-pager:0.21.4-beta"
-
-    // Swipe Refresh
-    implementation "com.google.accompanist:accompanist-swiperefresh:0.21.4-beta"
 }

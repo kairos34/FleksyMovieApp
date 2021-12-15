@@ -24,23 +24,13 @@ class MovieDetailViewModel @Inject constructor(
     private val _state = mutableStateOf(MovieDetailState())
     val state: State<MovieDetailState> = _state
 
-    private val _isRefreshing = MutableStateFlow(false)
-    val isRefreshing: StateFlow<Boolean>
-        get() = _isRefreshing.asStateFlow()
-
     init {
-        savedStateHandle.get<String>(Constants.PARAM_TV_ID)?.let { tvId ->
-            getSimilarMovies(tvId.toInt())
-        }
+        refresh()
     }
 
     fun refresh() {
-        viewModelScope.launch {
-            _isRefreshing.emit(true)
-            savedStateHandle.get<String>(Constants.PARAM_TV_ID)?.let { tvId ->
-                getSimilarMovies(tvId.toInt())
-            }
-            _isRefreshing.emit(false)
+        savedStateHandle.get<String>(Constants.PARAM_TV_ID)?.let { tvId ->
+            getSimilarMovies(tvId.toInt())
         }
     }
 
