@@ -1,14 +1,13 @@
 package com.android.fleksy.movie.data.remote.dto
 
 import com.android.fleksy.movie.domain.model.Movie
-import com.android.fleksy.movie.domain.model.MovieDetail
 import com.google.gson.annotations.SerializedName
 
 data class MovieDto(
     @SerializedName("backdrop_path")
     val backdropPath: String,
     @SerializedName("first_air_date")
-    val firstAirDate: String,
+    val firstAirDate: String?,
     @SerializedName("genre_ids")
     val genreIds: List<Int>,
     val id: Int,
@@ -30,14 +29,6 @@ data class MovieDto(
 )
 
 fun MovieDto.toMovie() = Movie(
-    id = id,
-    name = originalName,
-    vote = voteAverage,
-    posterPath = posterPath,
-    date = firstAirDate
-)
-
-fun MovieDto.toMovieDetail() = MovieDetail(
     id = id,
     name = originalName,
     vote = voteAverage,

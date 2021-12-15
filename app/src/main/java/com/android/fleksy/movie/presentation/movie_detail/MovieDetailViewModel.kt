@@ -7,36 +7,78 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.fleksy.movie.common.Constants
 import com.android.fleksy.movie.common.Resource
+import com.android.fleksy.movie.domain.usecases.GetMovieUseCase
 import com.android.fleksy.movie.domain.usecases.GetSimilarMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieDetailViewModel @Inject constructor(
+    private val getMovieUseCase: GetMovieUseCase,
     private val getSimilarMoviesUseCase: GetSimilarMoviesUseCase,
-    savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _state = mutableStateOf(MovieDetailState())
     val state: State<MovieDetailState> = _state
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean>
+        get() = _isRefreshing.asStateFlow()
+
     init {
         savedStateHandle.get<String>(Constants.PARAM_TV_ID)?.let { tvId ->
-            getSimilarMovies(tvId)
+            getSimilarMovies(tvId.toInt())
         }
     }
 
-    private fun getSimilarMovies(tvId: String) {
-        getSimilarMoviesUseCase(tvId.toInt()).onEach { result ->
-            when (result) {
+    fun refresh() {
+        viewModelScope.launch {
+            _isRefreshing.emit(true)
+            savedStateHandle.get<String>(Constants.PARAM_TV_ID)?.let { tvId ->
+                getSimilarMovies(tvId.toInt())
+            }
+            _isRefreshing.emit(false)
+        }
+    }
+
+    private fun getSimilarMovies(tvId: Int) {
+        getSimilarMoviesUseCase(tvId).onEach { similarMoviesResult ->
+            when (similarMoviesResult) {
                 is Resource.Success -> {
-                    _state.value = MovieDetailState(similarMovies = result.data ?: listOf())
+                    getMovieUseCase(tvId).onEach { movieResult ->
+                        when (movieResult) {
+                            is Resource.Success -> {
+                                _state.value =
+                                    MovieDetailState(
+                                        similarMovies = (
+                                                listOf(movieResult.data!!) +
+                                                        // Sort similar movies by rating
+                                                        (similarMoviesResult.data?.sortedByDescending { it.vote }
+                                                            ?: listOf()
+                                                                )
+                                                ).distinctBy {
+                                                // Eliminate same movies
+                                                it.id
+                                            }
+                                    )
+                            }
+                            is Resource.Error -> {
+                                _state.value = MovieDetailState(
+                                    error = movieResult.message ?: "An unexpected error occured"
+                                )
+                            }
+                            is Resource.Loading -> {
+                                _state.value = MovieDetailState(isLoading = true)
+                            }
+                        }
+                    }.launchIn(viewModelScope)
                 }
                 is Resource.Error -> {
                     _state.value = MovieDetailState(
-                        error = result.message ?: "An unexpected error occured"
+                        error = similarMoviesResult.message ?: "An unexpected error occured"
                     )
                 }
                 is Resource.Loading -> {

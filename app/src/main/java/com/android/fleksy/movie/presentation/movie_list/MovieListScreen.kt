@@ -51,7 +51,7 @@ fun MovieListScreen(
                         }
                     }
                     loadState.append is LoadState.Error -> {
-                        val error = movies.loadState.refresh as LoadState.Error
+                        val error = movies.loadState.append as LoadState.Error
                         item {
                             ErrorItem(
                                 message = error.error.localizedMessage!!,

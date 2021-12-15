@@ -1,5 +1,6 @@
 package com.android.fleksy.movie.domain.usecases
 
+import android.util.Log
 import com.android.fleksy.movie.common.Resource
 import com.android.fleksy.movie.data.remote.dto.toMovie
 import com.android.fleksy.movie.domain.model.Movie
@@ -10,22 +11,22 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetSimilarMoviesUseCase @Inject constructor(
+class GetMovieUseCase @Inject constructor(
     private val repository: MovieRepository
 ) {
-    operator fun invoke(tvId: Int): Flow<Resource<List<Movie>>> = flow {
+    operator fun invoke(tvId: Int): Flow<Resource<Movie>> = flow {
         try {
-            emit(Resource.Loading<List<Movie>>())
-            val movies = repository.getSimilarMovies(tvId).movies.map { it.toMovie() }
-            emit(Resource.Success<List<Movie>>(movies))
+            emit(Resource.Loading<Movie>())
+            val movie = repository.getMovie(tvId).toMovie()
+            emit(Resource.Success<Movie>(movie))
         } catch (e: HttpException) {
             emit(
-                Resource.Error<List<Movie>>(
+                Resource.Error<Movie>(
                     e.localizedMessage ?: "An unexpected error occured"
                 )
             )
         } catch (e: IOException) {
-            emit(Resource.Error<List<Movie>>("Couldn't reach server. Check your internet connection."))
+            emit(Resource.Error<Movie>("Couldn't reach server. Check your internet connection."))
         }
     }
 }

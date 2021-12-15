@@ -21,6 +21,8 @@ import coil.compose.rememberImagePainter
 import com.android.fleksy.movie.R
 import com.android.fleksy.movie.common.Constants
 import com.android.fleksy.movie.domain.model.Movie
+import com.android.fleksy.movie.presentation.theme.ColorPrimary
+import com.android.fleksy.movie.presentation.theme.MediumGray
 
 
 @Composable
@@ -49,7 +51,7 @@ fun MovieListItem(
             modifier = Modifier
                 .size(128.dp)
                 .clip(RoundedCornerShape(10))
-                .border(5.dp, Color.Gray, RoundedCornerShape(10))
+                .border(5.dp, MediumGray, RoundedCornerShape(10))
         )
         Row(
             modifier = Modifier
@@ -62,7 +64,9 @@ fun MovieListItem(
                 verticalArrangement = Arrangement.SpaceBetween) {
                 Text(
                     text = movie.name,
-                    style = MaterialTheme.typography.h3,
+                    style = MaterialTheme.typography.h3.copy(
+                        color = ColorPrimary
+                    ),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
                 )

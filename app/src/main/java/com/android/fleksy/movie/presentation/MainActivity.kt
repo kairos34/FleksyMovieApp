@@ -13,10 +13,12 @@ import com.android.fleksy.movie.presentation.movie_detail.MovieDetailScreen
 import com.android.fleksy.movie.presentation.movie_list.MovieListScreen
 import com.android.fleksy.movie.presentation.splash.SplashScreen
 import com.android.fleksy.movie.presentation.theme.FleksyMovieAppTheme
+import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @ExperimentalPagerApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -29,6 +31,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalPagerApi
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
