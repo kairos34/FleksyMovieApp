@@ -23,6 +23,7 @@ import com.android.fleksy.movie.common.Constants
 import com.android.fleksy.movie.domain.model.Movie
 import com.android.fleksy.movie.presentation.theme.ColorPrimary
 import com.android.fleksy.movie.presentation.theme.MediumGray
+import com.android.fleksy.movie.util.safeClick
 
 
 @Composable
@@ -33,7 +34,11 @@ fun MovieListItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onItemClick(movie) }
+            .clickable {
+                safeClick {
+                    onItemClick(movie)
+                }
+            }
             .padding(20.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
