@@ -33,7 +33,11 @@ fun SplashScreen(navController: NavController) {
                 }
             )
         )
-        navController.navigate(Screen.MovieListScreen.route)
+        navController.navigate(Screen.MovieListScreen.route) {
+            popUpTo(Screen.SplashScreen.route) {
+                inclusive = true
+            }
+        }
     }
     Box (
         contentAlignment = Alignment.Center,
