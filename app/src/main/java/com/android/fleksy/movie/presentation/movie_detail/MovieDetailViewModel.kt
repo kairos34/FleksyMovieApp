@@ -1,26 +1,18 @@
 package com.android.fleksy.movie.presentation.movie_detail
 
-import android.graphics.drawable.BitmapDrawable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import coil.compose.ImagePainter
 import com.android.fleksy.movie.common.Constants
 import com.android.fleksy.movie.common.Resource
 import com.android.fleksy.movie.domain.model.Movie
 import com.android.fleksy.movie.domain.usecases.GetMovieUseCase
 import com.android.fleksy.movie.domain.usecases.GetSimilarMoviesUseCase
-import com.android.fleksy.movie.presentation.theme.ColorPrimary
-import com.android.fleksy.movie.presentation.theme.DarkGray
-import com.android.fleksy.movie.util.generateDominantColorState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,13 +31,6 @@ class MovieDetailViewModel @Inject constructor(
     private val _index = mutableStateOf(0)
     val index: MutableState<Int> = _index
 
-    private val _brush = mutableStateOf(
-        Brush.verticalGradient(
-            colors = listOf(ColorPrimary, DarkGray)
-        )
-    )
-    val brush: MutableState<Brush> = _brush
-
     init {
         refresh()
     }
@@ -53,19 +38,6 @@ class MovieDetailViewModel @Inject constructor(
     fun refresh() {
         savedStateHandle.get<String>(Constants.PARAM_TV_ID)?.let { tvId ->
             getSimilarMovies(tvId.toInt())
-        }
-    }
-
-    fun updateBrushByCurrentMovieColor(painter: ImagePainter) {
-        _movie.value.posterPath?.run {
-            viewModelScope.launch {
-                val image =
-                    (painter.imageLoader.execute(painter.request).drawable as BitmapDrawable).bitmap
-                val swatch = image.generateDominantColorState()
-                _brush.value = Brush.verticalGradient(
-                    listOf(Color(swatch.rgb), DarkGray)
-                )
-            }
         }
     }
 
