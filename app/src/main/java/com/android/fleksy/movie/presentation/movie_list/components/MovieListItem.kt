@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -41,13 +42,17 @@ fun MovieListItem(
             .padding(20.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        val painter = rememberImagePainter(
-            data = "${Constants.SMALL_IMAGE_URL}${movie.posterPath}",
-            builder = {
-                placeholder(R.drawable.placeholder)
-                fallback(R.drawable.placeholder)
-            }
-        )
+        val painter = if(movie.posterPath.isNullOrEmpty()) {
+            painterResource(id = R.drawable.placeholder)
+        } else {
+            rememberImagePainter(
+                data = "${Constants.SMALL_IMAGE_URL}${movie.posterPath}",
+                builder = {
+                    placeholder(R.drawable.placeholder)
+                    fallback(R.drawable.placeholder)
+                }
+            )
+        }
         Image(
             painter = painter,
             contentDescription = null,
