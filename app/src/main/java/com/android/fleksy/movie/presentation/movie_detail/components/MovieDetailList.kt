@@ -13,9 +13,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.android.fleksy.movie.presentation.common.ErrorItem
-import com.android.fleksy.movie.presentation.common.LoadingView
-import com.android.fleksy.movie.presentation.common.MarqueeText
+import com.android.fleksy.movie.presentation.common.*
 import com.android.fleksy.movie.presentation.movie_detail.MovieDetailState
 import com.google.accompanist.pager.ExperimentalPagerApi
 
@@ -37,21 +35,31 @@ fun MovieDetailList(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                item { Spacer(modifier = Modifier.height(20.dp)) }
                 item {
-                    Text(
-                        text = "Similar Movies With:",
-                        style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.ExtraBold),
-                        textAlign = TextAlign.Center
-                    )
+                    MediaQuery(comparator = Dimensions.Width lessThan Dimensions.Height) {
+                        Spacer(modifier = Modifier.height(20.dp))
+                        Text(
+                            text = "Similar Movies With:",
+                            style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.ExtraBold),
+                            textAlign = TextAlign.Center
+                        )
+                        MarqueeText(
+                            text = it.first().name,
+                            style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.ExtraBold),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
                 }
                 item {
-                    MarqueeText(
-                        text = it.first().name,
-                        style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.ExtraBold),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(16.dp)
-                    )
+                    MediaQuery(comparator = Dimensions.Width greaterThan Dimensions.Height) {
+                        MarqueeText(
+                            text = "Similar Movies With: ${it.first().name}",
+                            style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.ExtraBold),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
                 }
                 item { MovieDetailPager(it, currentIndex) }
             }

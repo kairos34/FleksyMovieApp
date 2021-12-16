@@ -2,115 +2,54 @@ package com.android.fleksy.movie.presentation.movie_detail.components
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.MaterialTheme.typography
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.android.fleksy.movie.R
 import com.android.fleksy.movie.common.Constants
 import com.android.fleksy.movie.domain.model.Movie
-import com.android.fleksy.movie.presentation.common.MarqueeText
-import com.android.fleksy.movie.presentation.theme.ColorPrimary
-import com.android.fleksy.movie.presentation.theme.MediumGray
+import com.android.fleksy.movie.presentation.common.*
 
 @Composable
-fun MovieDetailItem(movie: Movie, posterHeight: Dp) {
-    Column {
-        val painter = if(movie.posterPath.isNullOrEmpty()) {
-            painterResource(id = R.drawable.placeholder)
-        } else {
-            rememberImagePainter(
-                data = "${Constants.LARGE_IMAGE_URL}${movie.posterPath}",
-                builder = {
-                    placeholder(R.drawable.placeholder)
-                    fallback(R.drawable.placeholder)
-                }
-            )
-        }
-        Image(
-            painter = painter,
-            contentScale = ContentScale.FillBounds,
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(posterHeight)
-        )
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxHeight(),
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                MarqueeText(
-                    text = movie.name,
-                    modifier = Modifier.padding(8.dp),
-                    style = typography.h6.copy(
-                        color = ColorPrimary,
-                        fontWeight = FontWeight.ExtraBold
-                    )
-                )
-                Text(
-                    text = "Release: ${movie.date}",
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                    style = typography.h6.copy(fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                )
-                Text(
-                    text = "Rating  •  ${("%.1f".format(movie.vote)).replace(',', '.')}/10",
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                    style = typography.h6.copy(
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold,
-                        fontStyle = FontStyle.Italic
-                    )
-                )
-                Text(
-                    text = "Overview",
-                    modifier = Modifier
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-                        .align(alignment = Alignment.CenterHorizontally),
-                    style = typography.h6.copy(
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = ColorPrimary
-                    )
-                )
-                Card(
-                    border = BorderStroke(2.dp, MediumGray),
-                    shape = RoundedCornerShape(16.dp),
-                    backgroundColor = MaterialTheme.colors.onBackground,
-                    contentColor = MaterialTheme.colors.background,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-                ) {
-                    Text(
-                        text = if (movie.overview.isNotEmpty()) movie.overview else "Overview not found!",
-                        color = if (movie.overview.isNotEmpty()) Color.Unspecified else Color.Red,
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .weight(1f)
-                            .verticalScroll(rememberScrollState(0)),
-                        style = typography.subtitle2.copy(fontSize = 12.sp)
-                    )
-                }
+fun MovieDetailItem(movie: Movie, posterHeight: Dp, posterWidth: Dp) {
+    val painter = if(movie.posterPath.isNullOrEmpty()) {
+        painterResource(id = R.drawable.placeholder)
+    } else {
+        rememberImagePainter(
+            data = "${Constants.LARGE_IMAGE_URL}${movie.posterPath}",
+            builder = {
+                placeholder(R.drawable.placeholder)
+                fallback(R.drawable.placeholder)
             }
+        )
+    }
+    MediaQuery(comparator = Dimensions.Width lessThan Dimensions.Height) {
+        Column {
+            Image(
+                painter = painter,
+                contentScale = ContentScale.FillBounds,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(posterHeight)
+            )
+            MovieDetailInfo(movie = movie)
+        }
+    }
+    MediaQuery(comparator = Dimensions.Width greaterThan Dimensions.Height) {
+        Row {
+            Image(
+                painter = painter,
+                contentScale = ContentScale.FillBounds,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(posterWidth)
+            )
+            MovieDetailInfo(movie = movie)
         }
     }
 }

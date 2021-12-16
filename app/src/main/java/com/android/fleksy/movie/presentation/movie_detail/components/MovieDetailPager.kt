@@ -26,8 +26,11 @@ fun MovieDetailPager(movies: List<Movie>, currentIndex: MutableState<Int>) {
         currentIndex.value = currentPage
         val configuration = LocalConfiguration.current
         val screenHeight = configuration.screenHeightDp.dp
-        val cardHeight = if(screenHeight.value * 0.8 >= 600) Dp((screenHeight.value * 0.8).toFloat()) else 600.dp
+        val screenWidth = configuration.screenWidthDp.dp
+        val cardHeight = Dp((screenHeight.value * 0.8).toFloat())
+        val cardWidth = Dp((screenWidth.value * 0.9).toFloat())
         val posterHeight = Dp((cardHeight.value * 0.5).toFloat())
+        val posterWidth = Dp((cardWidth.value * 0.5).toFloat())
         Card(
             shape = RoundedCornerShape(16.dp),
             backgroundColor = MaterialTheme.colors.onBackground,
@@ -58,7 +61,7 @@ fun MovieDetailPager(movies: List<Movie>, currentIndex: MutableState<Int>) {
                 }
                 .height(cardHeight)
         ) {
-            MovieDetailItem(movie = movies[page], posterHeight)
+            MovieDetailItem(movie = movies[page], posterHeight, posterWidth)
         }
     }
 }
