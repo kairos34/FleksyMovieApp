@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.android.fleksy.movie.presentation.common.ErrorItem
 import com.android.fleksy.movie.presentation.common.LoadingView
+import com.android.fleksy.movie.presentation.common.MarqueeText
 import com.android.fleksy.movie.presentation.movie_detail.MovieDetailState
 import com.google.accompanist.pager.ExperimentalPagerApi
 
@@ -45,7 +46,7 @@ fun MovieDetailList(
                     )
                 }
                 item {
-                    Text(
+                    MarqueeText(
                         text = it.first().name,
                         style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.ExtraBold),
                         textAlign = TextAlign.Center,

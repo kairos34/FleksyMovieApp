@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.android.fleksy.movie.common.Constants
 import com.android.fleksy.movie.domain.model.Movie
+import com.android.fleksy.movie.presentation.common.MarqueeText
 import com.android.fleksy.movie.presentation.theme.ColorPrimary
 import com.android.fleksy.movie.presentation.theme.MediumGray
 
@@ -44,7 +45,7 @@ fun MovieDetailItem(movie: Movie, posterHeight: Dp) {
                     .fillMaxHeight(),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
+                MarqueeText(
                     text = movie.name,
                     modifier = Modifier.padding(8.dp),
                     style = typography.h6.copy(

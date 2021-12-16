@@ -10,7 +10,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -21,10 +20,10 @@ import coil.compose.rememberImagePainter
 import com.android.fleksy.movie.R
 import com.android.fleksy.movie.common.Constants
 import com.android.fleksy.movie.domain.model.Movie
+import com.android.fleksy.movie.presentation.common.MarqueeText
 import com.android.fleksy.movie.presentation.theme.ColorPrimary
 import com.android.fleksy.movie.presentation.theme.MediumGray
 import com.android.fleksy.movie.util.safeClick
-
 
 @Composable
 fun MovieListItem(
@@ -67,13 +66,11 @@ fun MovieListItem(
             Column(modifier = Modifier
                 .fillMaxHeight(),
                 verticalArrangement = Arrangement.SpaceBetween) {
-                Text(
+                MarqueeText(
                     text = movie.name,
                     style = MaterialTheme.typography.h3.copy(
                         color = ColorPrimary
-                    ),
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
+                    )
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
