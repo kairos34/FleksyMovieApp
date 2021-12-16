@@ -12,14 +12,18 @@ android {
         applicationId "com.android.fleksy.movie"
         minSdk 21
         targetSdk 31
-        versionCode 115
-        versionName "1.1.5"
+        versionCode 116
+        versionName "1.1.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         vectorDrawables {
             useSupportLibrary true
         }
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        buildConfigField "String", "API_KEY", "${properties.getProperty("API_KEY")}"
     }
 
     buildTypes {

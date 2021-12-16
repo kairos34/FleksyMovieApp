@@ -3,6 +3,7 @@ package com.android.fleksy.movie.util
 import android.graphics.Bitmap
 import android.os.SystemClock
 import androidx.palette.graphics.Palette
+import com.android.fleksy.movie.BuildConfig
 import com.android.fleksy.movie.common.Constants
 import okhttp3.Interceptor
 
@@ -11,7 +12,7 @@ private var lastClickTime: Long = 0
 fun Interceptor.Chain.apiKeyInterceptor() =
     proceed(
         request().newBuilder().url(
-            request().url.newBuilder().addQueryParameter(Constants.PARAM_API_KEY, Constants.API_KEY)
+            request().url.newBuilder().addQueryParameter(Constants.PARAM_API_KEY, BuildConfig.API_KEY)
                 .build()
         ).build()
     )
