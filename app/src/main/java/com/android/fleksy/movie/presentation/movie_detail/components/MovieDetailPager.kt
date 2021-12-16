@@ -5,24 +5,29 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.android.fleksy.movie.domain.model.Movie
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.calculateCurrentOffsetForPage
+import com.google.accompanist.pager.*
 import kotlin.math.absoluteValue
 
 @ExperimentalPagerApi
 @Composable
-fun MovieDetailPager(movies: List<Movie>) {
+fun MovieDetailPager(movies: List<Movie>, currentIndex: MutableState<Int>) {
     HorizontalPager(
         count = movies.size - 1,
-        contentPadding = PaddingValues(horizontal = 32.dp)
+        contentPadding = PaddingValues(horizontal = 32.dp),
     ) { page ->
+        currentIndex.value = currentPage
+        val configuration = LocalConfiguration.current
+        val screenHeight = configuration.screenHeightDp.dp
+        val cardHeight = if(screenHeight.value * 0.8 >= 600) Dp((screenHeight.value * 0.8).toFloat()) else 600.dp
+        val posterHeight = Dp((cardHeight.value * 0.5).toFloat())
         Card(
             shape = RoundedCornerShape(16.dp),
             backgroundColor = MaterialTheme.colors.onBackground,
@@ -50,9 +55,10 @@ fun MovieDetailPager(movies: List<Movie>) {
                         stop = 1f,
                         fraction = 1f - pageOffset.coerceIn(0f, 1f)
                     )
-                }.height(600.dp)
+                }
+                .height(cardHeight)
         ) {
-            MovieDetailItem(movie = movies[page])
+            MovieDetailItem(movie = movies[page], posterHeight)
         }
     }
 }
