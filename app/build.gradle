@@ -12,8 +12,9 @@ android {
         applicationId "com.android.fleksy.movie"
         minSdk 21
         targetSdk 31
-        versionCode 116
-        versionName "1.1.6"
+        versionCode 117
+        versionName "1.1.7"
+        setProperty('archivesBaseName', "FleksyMovie-$versionName")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -79,7 +80,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.2"
-    implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2"
 
     // Compose dependencies
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0"

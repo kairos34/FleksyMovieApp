@@ -70,6 +70,18 @@ fun MediaQuery(
     }
 }
 
+@Composable
+fun IsScreenModePortrait(): Boolean {
+    return Dimensions.Comparator.DimensionComparator(
+        operator = Dimensions.DimensionOperator.LessThan,
+        dimension = Dimensions.Width,
+        otherDimension = Dimensions.Height
+    ).compare(
+        width = LocalContext.current.resources.displayMetrics.widthPixels.dp / LocalDensity.current.density,
+        height = LocalContext.current.resources.displayMetrics.heightPixels.dp / LocalDensity.current.density
+    )
+}
+
 infix fun Dimensions.lessThan(otherDimension: Dimensions): Dimensions.Comparator {
     return Dimensions.Comparator.DimensionComparator(
         operator = Dimensions.DimensionOperator.LessThan,
