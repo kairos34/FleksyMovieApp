@@ -12,8 +12,8 @@ android {
         applicationId "com.android.fleksy.movie"
         minSdk 21
         targetSdk 31
-        versionCode 117
-        versionName "1.1.7"
+        versionCode 118
+        versionName "1.1.8"
         setProperty('archivesBaseName', "FleksyMovie-$versionName")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -94,4 +94,7 @@ dependencies {
 
     // UI Pager
     implementation "com.google.accompanist:accompanist-pager:0.21.4-beta"
+
+    // Leak Canary
+    debugImplementation "com.squareup.leakcanary:leakcanary-android.2.7"
 }

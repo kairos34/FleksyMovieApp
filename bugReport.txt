@@ -1,0 +1,6 @@
+When similar movies compose component is open,
+if screen orientation is changed consecutively below bug happens:
+
+https://stackoverflow.com/questions/69813972/activity-leaked-after-orientation-change-after-using-androidx-navigation-compose
+
+There is nothing to do with above bug because it is a bug of the Jetpack library...
