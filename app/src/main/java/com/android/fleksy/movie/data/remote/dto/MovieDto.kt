@@ -1,8 +1,10 @@
 package com.android.fleksy.movie.data.remote.dto
 
+import androidx.annotation.Keep
 import com.android.fleksy.movie.domain.model.Movie
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class MovieDto(
     @SerializedName("backdrop_path")
     val backdropPath: String,
