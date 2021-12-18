@@ -1,10 +1,17 @@
 package com.android.fleksy.movie.presentation.movie_list
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.LoadState
@@ -13,6 +20,7 @@ import com.android.fleksy.movie.presentation.Screen
 import com.android.fleksy.movie.presentation.common.ErrorItem
 import com.android.fleksy.movie.presentation.common.LoadingItem
 import com.android.fleksy.movie.presentation.common.LoadingView
+import com.android.fleksy.movie.presentation.common.MarqueeText
 import com.android.fleksy.movie.presentation.movie_list.components.MovieListItem
 
 @Composable
@@ -22,47 +30,62 @@ fun MovieListScreen(
 ) {
     val movies = viewModel.getMovies().collectAsLazyPagingItems()
     Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(movies.itemCount) { index ->
-                MovieListItem(
-                    movie = movies[index]!!,
-                    onItemClick = {
-                        navController.navigate(Screen.MovieDetailScreen.route + "/${it.id}")
-                    }
-                )
-            }
 
-            movies.apply {
-                when {
-                    loadState.refresh is LoadState.Loading -> {
-                        item { LoadingView(modifier = Modifier.fillParentMaxSize()) }
-                    }
-                    loadState.append is LoadState.Loading -> {
-                        item { LoadingItem() }
-                    }
-                    loadState.refresh is LoadState.Error -> {
-                        val error = movies.loadState.refresh as LoadState.Error
-                        item {
-                            ErrorItem(
-                                message = error.error.localizedMessage!!,
-                                modifier = Modifier.fillParentMaxSize(),
-                                onClickRetry = { retry() }
-                            )
+        Column (
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            MarqueeText(
+                text = "Top Rated Movies",
+                style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.ExtraBold),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(16.dp)
+            )
+
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+
+                items(movies.itemCount) { index ->
+                    MovieListItem(
+                        movie = movies[index]!!,
+                        onItemClick = {
+                            navController.navigate(Screen.MovieDetailScreen.route + "/${it.id}")
                         }
-                    }
-                    loadState.append is LoadState.Error -> {
-                        val error = movies.loadState.append as LoadState.Error
-                        item {
-                            ErrorItem(
-                                message = error.error.localizedMessage!!,
-                                modifier = Modifier.fillParentMaxSize(),
-                                onClickRetry = { retry() }
-                            )
+                    )
+                }
+
+                movies.apply {
+                    when {
+                        loadState.refresh is LoadState.Loading -> {
+                            item { LoadingView(modifier = Modifier.fillParentMaxSize()) }
+                        }
+                        loadState.append is LoadState.Loading -> {
+                            item { LoadingItem() }
+                        }
+                        loadState.refresh is LoadState.Error -> {
+                            val error = movies.loadState.refresh as LoadState.Error
+                            item {
+                                ErrorItem(
+                                    message = error.error.localizedMessage!!,
+                                    modifier = Modifier.fillParentMaxSize(),
+                                    onClickRetry = { retry() }
+                                )
+                            }
+                        }
+                        loadState.append is LoadState.Error -> {
+                            val error = movies.loadState.append as LoadState.Error
+                            item {
+                                ErrorItem(
+                                    message = error.error.localizedMessage!!,
+                                    modifier = Modifier.fillParentMaxSize(),
+                                    onClickRetry = { retry() }
+                                )
+                            }
                         }
                     }
                 }
-            }
 
+            }
         }
+
     }
 }
