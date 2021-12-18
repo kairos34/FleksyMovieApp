@@ -23,7 +23,7 @@ import com.android.fleksy.movie.presentation.Screen
 import com.android.fleksy.movie.presentation.common.IsScreenModePortrait
 
 @Composable
-fun AppLogoItem(navController: NavController) {
+fun AppLogoItem(navController: NavController, dark: Boolean) {
     val scale = remember {
         Animatable(0f)
     }
@@ -51,7 +51,7 @@ fun AppLogoItem(navController: NavController) {
             .fillMaxSize()
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logo),
+            painter = painterResource(id = if (dark) R.drawable.logo else R.drawable.logo_light),
             contentDescription = null,
             modifier = Modifier
                 .scale(scale.value)

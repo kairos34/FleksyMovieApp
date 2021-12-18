@@ -1,6 +1,5 @@
 package com.android.fleksy.movie.domain.usecases
 
-import android.util.Log
 import com.android.fleksy.movie.common.Resource
 import com.android.fleksy.movie.data.remote.dto.toMovie
 import com.android.fleksy.movie.domain.model.Movie

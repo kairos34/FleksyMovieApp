@@ -23,7 +23,6 @@ import com.android.fleksy.movie.R
 import com.android.fleksy.movie.common.Constants
 import com.android.fleksy.movie.domain.model.Movie
 import com.android.fleksy.movie.presentation.common.MarqueeText
-import com.android.fleksy.movie.presentation.theme.ColorPrimary
 import com.android.fleksy.movie.presentation.theme.LightGray
 import com.android.fleksy.movie.util.safeClick
 import com.skydoves.landscapist.ShimmerParams
@@ -36,7 +35,8 @@ fun MovieListItem(
 ) {
     Card(
         shape = RoundedCornerShape(10.dp),
-        backgroundColor = LightGray,
+        backgroundColor = MaterialTheme.colors.onBackground,
+        contentColor = MaterialTheme.colors.background,
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
@@ -92,7 +92,7 @@ fun MovieListItem(
                     MarqueeText(
                         text = movie.name,
                         style = MaterialTheme.typography.h3.copy(
-                            color = ColorPrimary
+                            color = MaterialTheme.colors.primary
                         )
                     )
                     Spacer(modifier = Modifier.height(10.dp))

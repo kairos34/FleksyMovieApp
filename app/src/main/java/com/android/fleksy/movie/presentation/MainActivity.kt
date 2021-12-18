@@ -6,25 +6,33 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.android.fleksy.movie.preferences.UserSettings
 import com.android.fleksy.movie.presentation.movie_detail.MovieDetailScreen
 import com.android.fleksy.movie.presentation.movie_list.MovieListScreen
 import com.android.fleksy.movie.presentation.splash.SplashScreen
 import com.android.fleksy.movie.presentation.theme.FleksyMovieAppTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var userSettings: UserSettings
+
     @ExperimentalPagerApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            FleksyMovieAppTheme {
+            val theme = userSettings.themeStream.collectAsState()
+            val isDarkTheme = theme.value
+            FleksyMovieAppTheme(isDarkTheme) {
                 Surface(color = MaterialTheme.colors.background) {
-                    Navigation()
+                    Navigation(userSettings = userSettings)
                 }
             }
         }
@@ -33,7 +41,7 @@ class MainActivity : ComponentActivity() {
 
 @ExperimentalPagerApi
 @Composable
-fun Navigation() {
+fun Navigation(userSettings: UserSettings) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -42,12 +50,14 @@ fun Navigation() {
         composable(
             route = Screen.SplashScreen.route
         ) {
-            SplashScreen(navController)
+            SplashScreen(navController, userSettings.isDark)
         }
         composable (
             route = Screen.MovieListScreen.route
         ) {
-            MovieListScreen(navController)
+            MovieListScreen(navController, userSettings) {
+                userSettings.isDark = it
+            }
         }
         composable(
             route = Screen.MovieDetailScreen.route + "/{tvId}"

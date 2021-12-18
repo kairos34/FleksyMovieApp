@@ -6,7 +6,7 @@ import com.android.fleksy.movie.presentation.splash.components.AppDeveloperItem
 import com.android.fleksy.movie.presentation.splash.components.AppLogoItem
 
 @Composable
-fun SplashScreen(navController: NavController) {
-    AppLogoItem(navController = navController)
+fun SplashScreen(navController: NavController, dark: Boolean) {
+    AppLogoItem(navController = navController, dark)
     AppDeveloperItem()
 }

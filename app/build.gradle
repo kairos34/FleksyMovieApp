@@ -12,8 +12,8 @@ android {
         applicationId "com.android.fleksy.movie"
         minSdk 21
         targetSdk 31
-        versionCode 123
-        versionName "1.2.3"
+        versionCode 124
+        versionName "1.2.4"
         setProperty('archivesBaseName', "FleksyMovie-$versionName")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -110,4 +110,7 @@ dependencies {
 
     // Leak Canary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+
+    // Data store
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 }

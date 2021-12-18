@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.sp
 import com.android.fleksy.movie.domain.model.Movie
 import com.android.fleksy.movie.presentation.common.MarqueeText
 import com.android.fleksy.movie.presentation.theme.ColorPrimary
-import com.android.fleksy.movie.presentation.theme.LightGray
 
 @Composable
 fun MovieDetailInfo(movie: Movie) {
@@ -67,7 +66,7 @@ fun MovieDetailInfo(movie: Movie) {
                 )
             )
             Card(
-                border = BorderStroke(2.dp, LightGray),
+                border = BorderStroke(2.dp, MaterialTheme.colors.primary),
                 shape = RoundedCornerShape(16.dp),
                 backgroundColor = MaterialTheme.colors.onBackground,
                 contentColor = MaterialTheme.colors.background,

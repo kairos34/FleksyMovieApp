@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -19,7 +20,8 @@ fun MovieDetailPager(
     currentIndex: MutableState<Int>,
     cardHeight: Dp,
     posterHeight: Dp,
-    posterWidth: Dp
+    posterWidth: Dp,
+    inverseColor: Color
 ) {
     HorizontalPager(
         count = movies.size - 1,
@@ -50,7 +52,8 @@ fun MovieDetailPager(
                         stop = 1f,
                         fraction = 1f - pageOffset.coerceIn(0f, 1f)
                     )
-                }.height(cardHeight)
+                }.height(cardHeight),
+            inverseColor = inverseColor
         ) {
             MovieDetailItem(movie = movies[page], posterHeight, posterWidth)
         }

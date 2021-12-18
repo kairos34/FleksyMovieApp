@@ -10,6 +10,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.android.fleksy.movie.presentation.common.*
 import com.android.fleksy.movie.presentation.movie_detail.MovieDetailState
+import com.android.fleksy.movie.util.getComplimentColor
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 @ExperimentalPagerApi
@@ -25,6 +27,7 @@ fun MovieDetailList(
     state: MovieDetailState,
     currentIndex: MutableState<Int>,
     brush: MutableState<Brush>,
+    detailTextColor: MutableState<Color>,
     retry: () -> Unit
 ) {
     Box(
@@ -40,6 +43,7 @@ fun MovieDetailList(
             val cardWidth = Dp((screenWidth.value * 0.9).toFloat())
             val posterHeight = Dp((cardHeight.value * 0.5).toFloat())
             val posterWidth = Dp((cardWidth.value * 0.5).toFloat())
+            val inverseTextColor = getComplimentColor(detailTextColor.value)
             Column (
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -49,12 +53,18 @@ fun MovieDetailList(
                         Spacer(modifier = Modifier.height(20.dp))
                         Text(
                             text = "Similar Movies Not Found With:",
-                            style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.ExtraBold),
+                            style = MaterialTheme.typography.h5.copy(
+                                fontWeight = FontWeight.ExtraBold,
+                                color = inverseTextColor
+                            ),
                             textAlign = TextAlign.Center
                         )
                         MarqueeText(
                             text = it.first().name,
-                            style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.ExtraBold),
+                            style = MaterialTheme.typography.h5.copy(
+                                fontWeight = FontWeight.ExtraBold,
+                                color = inverseTextColor
+                            ),
                             textAlign = TextAlign.Center,
                             modifier = Modifier.padding(16.dp)
                         )
@@ -62,7 +72,10 @@ fun MovieDetailList(
                     MediaQuery(comparator = Dimensions.Width greaterThan Dimensions.Height) {
                         MarqueeText(
                             text = "Similar Movies Not Found With: ${it.first().name}",
-                            style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.ExtraBold),
+                            style = MaterialTheme.typography.h5.copy(
+                                fontWeight = FontWeight.ExtraBold,
+                                color = inverseTextColor
+                            ),
                             textAlign = TextAlign.Center,
                             modifier = Modifier.padding(16.dp)
                         )
@@ -71,7 +84,8 @@ fun MovieDetailList(
                         modifier = Modifier.padding(
                             start = 32.dp,
                             end = 32.dp
-                        ).height(cardHeight)
+                        ).height(cardHeight),
+                        inverseTextColor
                     ) {
                         MovieDetailItem(
                             movie = it.first(),
@@ -84,12 +98,18 @@ fun MovieDetailList(
                         Spacer(modifier = Modifier.height(20.dp))
                         Text(
                             text = "Similar Movies With:",
-                            style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.ExtraBold),
+                            style = MaterialTheme.typography.h5.copy(
+                                fontWeight = FontWeight.ExtraBold,
+                                color = inverseTextColor
+                            ),
                             textAlign = TextAlign.Center
                         )
                         MarqueeText(
                             text = it.first().name,
-                            style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.ExtraBold),
+                            style = MaterialTheme.typography.h5.copy(
+                                fontWeight = FontWeight.ExtraBold,
+                                color = inverseTextColor
+                            ),
                             textAlign = TextAlign.Center,
                             modifier = Modifier.padding(16.dp)
                         )
@@ -97,7 +117,10 @@ fun MovieDetailList(
                     MediaQuery(comparator = Dimensions.Width greaterThan Dimensions.Height) {
                         MarqueeText(
                             text = "Similar Movies With: ${it.first().name}",
-                            style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.ExtraBold),
+                            style = MaterialTheme.typography.h5.copy(
+                                fontWeight = FontWeight.ExtraBold,
+                                color = inverseTextColor
+                            ),
                             textAlign = TextAlign.Center,
                             modifier = Modifier.padding(16.dp)
                         )
@@ -106,7 +129,7 @@ fun MovieDetailList(
                         modifier = Modifier.fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        item { MovieDetailPager(it, currentIndex, cardHeight, posterHeight, posterWidth) }
+                        item { MovieDetailPager(it, currentIndex, cardHeight, posterHeight, posterWidth, inverseTextColor) }
                     }
                 }
             }

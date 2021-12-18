@@ -14,7 +14,6 @@ import com.android.fleksy.movie.R
 import com.android.fleksy.movie.common.Constants
 import com.android.fleksy.movie.domain.model.Movie
 import com.android.fleksy.movie.presentation.common.*
-import com.android.fleksy.movie.presentation.theme.LightGray
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.coil.CoilImage
 
@@ -36,7 +35,7 @@ fun MovieDetailItem(movie: Movie, posterHeight: Dp, posterWidth: Dp) {
                     .height(posterHeight),
                 shimmerParams = ShimmerParams(
                     baseColor = MaterialTheme.colors.background,
-                    highlightColor = LightGray,
+                    highlightColor = MaterialTheme.colors.onBackground,
                     durationMillis = 350,
                     dropOff = 0.65f,
                     tilt = 20f
@@ -62,7 +61,7 @@ fun MovieDetailItem(movie: Movie, posterHeight: Dp, posterWidth: Dp) {
                     .width(posterWidth),
                 shimmerParams = ShimmerParams(
                     baseColor = MaterialTheme.colors.background,
-                    highlightColor = LightGray,
+                    highlightColor = MaterialTheme.colors.onBackground,
                     durationMillis = 350,
                     dropOff = 0.65f,
                     tilt = 20f
