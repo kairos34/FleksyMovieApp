@@ -1,14 +1,15 @@
 package com.android.fleksy.movie.di
 
+import com.android.fleksy.movie.BuildConfig
 import com.android.fleksy.movie.common.Constants
 import com.android.fleksy.movie.data.remote.MovieApi
 import com.android.fleksy.movie.data.repository.MovieRepositoryImpl
 import com.android.fleksy.movie.domain.repository.MovieRepository
-import com.android.fleksy.movie.util.apiKeyInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,13 +18,27 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModules {
+object AppModule {
 
     @Provides
     @Singleton
-    fun provideClient(): OkHttpClient {
+    fun provideApiKeyInterceptor(): Interceptor {
+        return Interceptor { chain ->
+            chain.proceed(
+                chain.request().newBuilder().url(
+                    chain.request().url.newBuilder()
+                        .addQueryParameter(Constants.PARAM_API_KEY, BuildConfig.API_KEY)
+                        .build()
+                ).build()
+            )
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun provideClient(apiKeyInterceptor: Interceptor): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor { chain -> chain.apiKeyInterceptor() }
+            .addInterceptor(apiKeyInterceptor)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     }
