@@ -12,8 +12,8 @@ android {
         applicationId "com.android.fleksy.movie"
         minSdk 21
         targetSdk 31
-        versionCode 122
-        versionName "1.2.2"
+        versionCode 123
+        versionName "1.2.3"
         setProperty('archivesBaseName', "FleksyMovie-$versionName")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -102,8 +102,8 @@ dependencies {
     implementation "androidx.compose.ui:ui-util:1.1.0-beta04"
     implementation 'androidx.palette:palette-ktx:1.0.0'
 
-    // Coil
-    implementation "io.coil-kt:coil-compose:1.4.0"
+    // Landscapist
+    implementation "com.github.skydoves:landscapist-coil:1.4.4"
 
     // UI Pager
     implementation "com.google.accompanist:accompanist-pager:0.21.4-beta"

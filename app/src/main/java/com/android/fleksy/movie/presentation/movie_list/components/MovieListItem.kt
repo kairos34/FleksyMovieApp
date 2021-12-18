@@ -1,7 +1,5 @@
 package com.android.fleksy.movie.presentation.movie_list.components
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,22 +9,25 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberImagePainter
+import coil.ImageLoader
 import com.android.fleksy.movie.R
 import com.android.fleksy.movie.common.Constants
 import com.android.fleksy.movie.domain.model.Movie
 import com.android.fleksy.movie.presentation.common.MarqueeText
 import com.android.fleksy.movie.presentation.theme.ColorPrimary
-import com.android.fleksy.movie.presentation.theme.MediumGray
 import com.android.fleksy.movie.presentation.theme.LightGray
 import com.android.fleksy.movie.util.safeClick
+import com.skydoves.landscapist.ShimmerParams
+import com.skydoves.landscapist.coil.CoilImage
 
 @Composable
 fun MovieListItem(
@@ -53,27 +54,30 @@ fun MovieListItem(
         Row(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            val painter = if (movie.posterPath.isNullOrEmpty()) {
-                painterResource(id = R.drawable.placeholder)
-            } else {
-                rememberImagePainter(
-                    data = "${Constants.SMALL_IMAGE_URL}${movie.posterPath}",
-                    builder = {
-                        placeholder(R.drawable.placeholder)
-                        fallback(R.drawable.placeholder)
-                    }
-                )
-            }
-            Image(
-                painter = painter,
-                contentDescription = null,
-                contentScale = ContentScale.FillBounds,
+            Box(
                 modifier = Modifier
                     .padding(10.dp)
                     .size(128.dp)
-                    .clip(RoundedCornerShape(10))
-                    .border(5.dp, MediumGray, RoundedCornerShape(10.dp))
-            )
+                    .clip(RoundedCornerShape(10))) {
+                CoilImage(
+                    imageModel = "${Constants.SMALL_IMAGE_URL}${movie.posterPath}",
+                    imageLoader = {
+                        ImageLoader.Builder(LocalContext.current)
+                            .availableMemoryPercentage(0.25)
+                            .build()
+                    },
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier.fillMaxSize(),
+                    shimmerParams = ShimmerParams(
+                        baseColor = MaterialTheme.colors.background,
+                        highlightColor = LightGray,
+                        durationMillis = 350,
+                        dropOff = 0.65f,
+                        tilt = 20f
+                    ),
+                    error = ImageBitmap.imageResource(R.drawable.placeholder)
+                )
+            }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

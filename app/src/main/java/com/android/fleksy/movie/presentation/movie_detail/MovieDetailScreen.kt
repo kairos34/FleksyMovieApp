@@ -4,8 +4,10 @@ import android.graphics.drawable.BitmapDrawable
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.rememberImagePainter
+import coil.ImageLoader
+import coil.request.ImageRequest
 import com.android.fleksy.movie.common.Constants
 import com.android.fleksy.movie.presentation.movie_detail.components.MovieDetailList
 import com.android.fleksy.movie.presentation.theme.ColorPrimary
@@ -32,17 +34,15 @@ fun MovieDetailScreen(
 
     viewModel.updateCurrentMovie()
 
-    val painter = rememberImagePainter(
-        data = "${Constants.SMALL_IMAGE_URL}${currentMovie.posterPath}",
-        builder = {
-            allowHardware(false)
-        }
-    )
+    val imageRequest = ImageRequest.Builder(LocalContext.current)
+        .data(data = "${Constants.SMALL_IMAGE_URL}${currentMovie.posterPath}")
+        .allowHardware(false)
+        .build()
+    val imageLoader = ImageLoader(LocalContext.current)
 
     currentMovie.posterPath?.takeIf { it.isNotEmpty() }?.run {
         rememberCoroutineScope().launch {
-            val image =
-                (painter.imageLoader.execute(painter.request).drawable as BitmapDrawable?)?.bitmap
+            val image = (imageLoader.execute(imageRequest).drawable as BitmapDrawable?)?.bitmap
             val swatch = image?.generateDominantColorState()
             swatch?.let {
                 brush.value = Brush.verticalGradient(
