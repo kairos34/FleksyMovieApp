@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface UserSettings {
     val themeStream: StateFlow<Boolean>
-    var isDark: Boolean
+    var isLight: Boolean
 }

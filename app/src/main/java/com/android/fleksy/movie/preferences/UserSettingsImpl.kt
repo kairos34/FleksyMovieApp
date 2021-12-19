@@ -14,13 +14,13 @@ class UserSettingsImpl @Inject constructor(
 ) : UserSettings {
 
     override val themeStream: MutableStateFlow<Boolean>
-    override var isDark: Boolean by AppThemePreferenceDelegate("app_theme", true)
+    override var isLight: Boolean by AppThemePreferenceDelegate("app_theme", true)
 
     private val preferences: SharedPreferences =
         context.getSharedPreferences("user_settings", Context.MODE_PRIVATE)
 
     init {
-        themeStream = MutableStateFlow(isDark)
+        themeStream = MutableStateFlow(isLight)
     }
 
     inner class AppThemePreferenceDelegate(

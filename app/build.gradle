@@ -12,8 +12,8 @@ android {
         applicationId "com.android.fleksy.movie"
         minSdk 21
         targetSdk 31
-        versionCode 124
-        versionName "1.2.4"
+        versionCode 125
+        versionName "1.2.5"
         setProperty('archivesBaseName', "FleksyMovie-$versionName")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -113,4 +113,7 @@ dependencies {
 
     // Data store
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    // Lottie animation
+    implementation 'com.airbnb.android:lottie-compose:4.2.2'
 }

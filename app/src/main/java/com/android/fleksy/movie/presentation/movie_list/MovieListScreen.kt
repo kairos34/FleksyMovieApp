@@ -3,11 +3,8 @@ package com.android.fleksy.movie.presentation.movie_list
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Switch
-import androidx.compose.material.SwitchDefaults.colors
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -23,9 +20,7 @@ import com.android.fleksy.movie.presentation.common.ErrorItem
 import com.android.fleksy.movie.presentation.common.LoadingItem
 import com.android.fleksy.movie.presentation.common.LoadingView
 import com.android.fleksy.movie.presentation.movie_list.components.MovieListItem
-import com.android.fleksy.movie.presentation.theme.ColorPrimary
-import com.android.fleksy.movie.presentation.theme.LightGray
-import com.android.fleksy.movie.presentation.theme.SwitchColor
+import com.android.fleksy.movie.presentation.movie_list.components.ThemeSwitchItem
 
 @Composable
 fun MovieListScreen(
@@ -34,7 +29,6 @@ fun MovieListScreen(
     viewModel: MovieListViewModel = hiltViewModel(),
     onToggleTheme: (Boolean) -> Unit
 ) {
-    val isDark = userSettings.themeStream.collectAsState()
     val movies = viewModel.getMovies().collectAsLazyPagingItems()
     Box(modifier = Modifier.fillMaxSize()) {
         Column (
@@ -48,23 +42,13 @@ fun MovieListScreen(
                     text = "Top Rated Movies",
                     style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.ExtraBold),
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(20.dp)
-                )
-
-                Box(
-                    contentAlignment = Alignment.TopEnd,
-                    modifier = Modifier.padding(20.dp)
-                ) {
-                    Switch(
-                        checked = isDark.value,
-                        onCheckedChange = { onToggleTheme(it) },
-                        colors = colors(
-                            uncheckedThumbColor = LightGray,
-                            checkedThumbColor = SwitchColor,
-                            checkedTrackColor = ColorPrimary
+                    modifier = Modifier
+                        .padding(
+                            start = 20.dp,
+                            end = 20.dp
                         )
-                    )
-                }
+                )
+                ThemeSwitchItem(userSettings, onToggleTheme)
             }
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {

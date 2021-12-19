@@ -50,13 +50,13 @@ fun Navigation(userSettings: UserSettings) {
         composable(
             route = Screen.SplashScreen.route
         ) {
-            SplashScreen(navController, userSettings.isDark)
+            SplashScreen(navController, userSettings.isLight)
         }
         composable (
             route = Screen.MovieListScreen.route
         ) {
             MovieListScreen(navController, userSettings) {
-                userSettings.isDark = it
+                userSettings.isLight = it
             }
         }
         composable(

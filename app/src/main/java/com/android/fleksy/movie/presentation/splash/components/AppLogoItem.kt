@@ -20,10 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.android.fleksy.movie.R
 import com.android.fleksy.movie.presentation.Screen
-import com.android.fleksy.movie.presentation.common.IsScreenModePortrait
+import com.android.fleksy.movie.presentation.common.isScreenModePortrait
 
 @Composable
-fun AppLogoItem(navController: NavController, dark: Boolean) {
+fun AppLogoItem(navController: NavController, isLight: Boolean) {
     val scale = remember {
         Animatable(0f)
     }
@@ -31,7 +31,7 @@ fun AppLogoItem(navController: NavController, dark: Boolean) {
         scale.animateTo(
             targetValue = 1.6f,
             animationSpec = tween(
-                durationMillis = 3000,
+                durationMillis = 4000,
                 delayMillis = 100,
                 easing = {
                     OvershootInterpolator(4f).getInterpolation(it)
@@ -44,14 +44,14 @@ fun AppLogoItem(navController: NavController, dark: Boolean) {
             }
         }
     }
-    val isScreenModePortrait = IsScreenModePortrait()
+    val isScreenModePortrait = isScreenModePortrait()
     Box(
         contentAlignment = if (isScreenModePortrait) Alignment.Center else Alignment.TopCenter,
         modifier = Modifier
             .fillMaxSize()
     ) {
         Image(
-            painter = painterResource(id = if (dark) R.drawable.logo else R.drawable.logo_light),
+            painter = painterResource(id = if (isLight.not()) R.drawable.logo else R.drawable.logo_light),
             contentDescription = null,
             modifier = Modifier
                 .scale(scale.value)

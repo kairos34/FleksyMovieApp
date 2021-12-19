@@ -71,7 +71,7 @@ fun MediaQuery(
 }
 
 @Composable
-fun IsScreenModePortrait(): Boolean {
+fun isScreenModePortrait(): Boolean {
     return Dimensions.Comparator.DimensionComparator(
         operator = Dimensions.DimensionOperator.LessThan,
         dimension = Dimensions.Width,
