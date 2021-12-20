@@ -32,7 +32,7 @@ data class MovieDto(
 
 fun MovieDto.toMovie() = Movie(
     id = id,
-    name = originalName,
+    name = name.takeIf { it.isEmpty().not() } ?: originalName,
     vote = voteAverage,
     posterPath = posterPath,
     overview = overview,

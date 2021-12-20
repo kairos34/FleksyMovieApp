@@ -19,12 +19,12 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@ExperimentalPagerApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @Inject
     lateinit var userSettings: UserSettings
 
-    @ExperimentalPagerApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
