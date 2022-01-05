@@ -1,6 +1,5 @@
 package com.android.fleksy.movie.presentation.movie_detail
 
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -26,10 +25,10 @@ class MovieDetailViewModel @Inject constructor(
     val state: State<MovieDetailState> = _state
 
     private val _movie = mutableStateOf(Movie())
-    val movie: MutableState<Movie> = _movie
+    val movie: State<Movie> = _movie
 
     private val _index = mutableStateOf(0)
-    val index: MutableState<Int> = _index
+    val index: State<Int> = _index
 
     init {
         refresh()
@@ -45,6 +44,10 @@ class MovieDetailViewModel @Inject constructor(
         _state.value.similarMovies?.run {
             _movie.value = this[_index.value]
         }
+    }
+
+    fun updateCurrentIndex(currentPage: Int) {
+        _index.value = currentPage
     }
 
     private fun getSimilarMovies(tvId: Int) {

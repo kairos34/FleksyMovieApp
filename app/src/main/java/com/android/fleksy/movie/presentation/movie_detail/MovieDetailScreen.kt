@@ -22,7 +22,6 @@ fun MovieDetailScreen(
     viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
     val currentMovie = viewModel.movie.value
-    val currentIndex = viewModel.index
     val state = viewModel.state.value
     val primary = MaterialTheme.colors.background
     val background = MaterialTheme.colors.background
@@ -66,5 +65,10 @@ fun MovieDetailScreen(
         )
     }
 
-    MovieDetailList(state, currentIndex, brush, detailTextColor, viewModel::refresh)
+    MovieDetailList(
+        state = state,
+        brush = brush,
+        detailTextColor = detailTextColor,
+        retry = viewModel::refresh
+    )
 }

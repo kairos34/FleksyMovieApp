@@ -25,7 +25,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @Composable
 fun MovieDetailList(
     state: MovieDetailState,
-    currentIndex: MutableState<Int>,
     brush: MutableState<Brush>,
     detailTextColor: MutableState<Color>,
     retry: () -> Unit
@@ -81,10 +80,12 @@ fun MovieDetailList(
                         )
                     }
                     MovieDetailCard(
-                        modifier = Modifier.padding(
-                            start = 32.dp,
-                            end = 32.dp
-                        ).height(cardHeight),
+                        modifier = Modifier
+                            .padding(
+                                start = 32.dp,
+                                end = 32.dp
+                            )
+                            .height(cardHeight),
                         inverseTextColor
                     ) {
                         MovieDetailItem(
@@ -129,7 +130,15 @@ fun MovieDetailList(
                         modifier = Modifier.fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        item { MovieDetailPager(it, currentIndex, cardHeight, posterHeight, posterWidth, inverseTextColor) }
+                        item {
+                            MovieDetailPager(
+                                movies = it,
+                                cardHeight = cardHeight,
+                                posterHeight = posterHeight,
+                                posterWidth = posterWidth,
+                                inverseColor = inverseTextColor
+                            )
+                        }
                     }
                 }
             }

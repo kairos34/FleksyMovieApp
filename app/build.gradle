@@ -12,8 +12,8 @@ android {
         applicationId "com.android.fleksy.movie"
         minSdk 21
         targetSdk 31
-        versionCode 126
-        versionName "1.2.6"
+        versionCode 127
+        versionName "1.2.7"
         setProperty('archivesBaseName', "FleksyMovie-$versionName")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

@@ -9,15 +9,17 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.android.fleksy.movie.domain.model.Movie
+import com.android.fleksy.movie.presentation.movie_detail.MovieDetailViewModel
 import com.google.accompanist.pager.*
 import kotlin.math.absoluteValue
 
 @ExperimentalPagerApi
 @Composable
 fun MovieDetailPager(
+    viewModel: MovieDetailViewModel = hiltViewModel(),
     movies: List<Movie>,
-    currentIndex: MutableState<Int>,
     cardHeight: Dp,
     posterHeight: Dp,
     posterWidth: Dp,
@@ -27,7 +29,7 @@ fun MovieDetailPager(
         count = movies.size - 1,
         contentPadding = PaddingValues(horizontal = 32.dp),
     ) { page ->
-        currentIndex.value = currentPage
+        viewModel.updateCurrentIndex(currentPage)
         MovieDetailCard(
             modifier = Modifier
                 .graphicsLayer {
