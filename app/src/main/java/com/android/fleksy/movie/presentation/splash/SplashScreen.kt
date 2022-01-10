@@ -12,8 +12,8 @@ import com.android.fleksy.movie.presentation.splash.components.AppLogoItem
 
 @Composable
 fun SplashScreen(navController: NavController, isLight: Boolean) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.snow))
-    LottieAnimation(composition)
+//    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.snow))
+//    LottieAnimation(composition)
     AppLogoItem(navController = navController, isLight)
     AppDeveloperItem()
 }
