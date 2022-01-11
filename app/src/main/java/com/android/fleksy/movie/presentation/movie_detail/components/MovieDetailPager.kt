@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.android.fleksy.movie.domain.model.Movie
+import com.android.fleksy.movie.presentation.common.isScreenModePortrait
 import com.android.fleksy.movie.presentation.movie_detail.MovieDetailViewModel
 import com.google.accompanist.pager.*
 import kotlin.math.absoluteValue
@@ -30,6 +31,7 @@ fun MovieDetailPager(
         contentPadding = PaddingValues(horizontal = 32.dp),
     ) { page ->
         viewModel.updateCurrentIndex(currentPage)
+        val isScreenModePortrait = isScreenModePortrait()
         MovieDetailCard(
             modifier = Modifier
                 .graphicsLayer {
@@ -38,9 +40,9 @@ fun MovieDetailPager(
                     // any effects for both directions
                     val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
 
-                    // We animate the scaleX + scaleY, between 90% and 100%
+                    // We animate the scaleX + scaleY, between 90%-95% and 100%
                     lerp(
-                        start = 0.9f,
+                        start = if(isScreenModePortrait) 0.9f else 0.95f,
                         stop = 1f,
                         fraction = 1f - pageOffset.coerceIn(0f, 1f)
                     ).also { scale ->
