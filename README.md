@@ -3,6 +3,8 @@ The Movie Database API integration application that lists popular/highest-rated 
 
 MVVM pattern used with Kotlin Flows as reactive programming library and Hilt as depencendy injection library, also Clean Code paradigm followed with SOLID principles using lots of Interfaces(to make it less dependent) and UseCases. Jetpack Compose Navigation used to navigate between screens. Unit tests written using MockWebServer(to simulate fake API Service) library.
 
+![Fleksy Movie App](FleksyMovieApp.gif)
+
 ## Building the app
 1.Open local.properties in the root directory
 

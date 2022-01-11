@@ -28,9 +28,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val theme = userSettings.themeStream.collectAsState()
-            val isDarkTheme = theme.value
-            FleksyMovieAppTheme(isDarkTheme) {
+            val isLightTheme = userSettings.themeStream.collectAsState().value
+            FleksyMovieAppTheme(isLightTheme) {
                 Surface(color = MaterialTheme.colors.background) {
                     Navigation(userSettings = userSettings)
                 }
