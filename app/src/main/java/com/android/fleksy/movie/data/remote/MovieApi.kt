@@ -7,12 +7,12 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieApi {
-    @GET("tv/{tvId}")
-    suspend fun getMovie(@Path("tvId") tvId: Int): MovieDto
+    @GET("movie/{movieId}")
+    suspend fun getMovie(@Path("movieId") movieId: Int): MovieDto
 
-    @GET("tv/top_rated")
+    @GET("movie/top_rated")
     suspend fun getMovies(@Query("page") page: Int): MovieListDto
 
-    @GET("tv/{tvId}/similar")
-    suspend fun getSimilarMovies(@Path("tvId") tvId: Int): MovieListDto
+    @GET("movie/{movieId}/similar")
+    suspend fun getSimilarMovies(@Path("movieId") movieId: Int): MovieListDto
 }

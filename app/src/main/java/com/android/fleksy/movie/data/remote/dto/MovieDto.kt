@@ -6,24 +6,23 @@ import com.google.gson.annotations.SerializedName
 
 @Keep
 data class MovieDto(
+    val adult: Boolean,
     @SerializedName("backdrop_path")
     val backdropPath: String,
-    @SerializedName("first_air_date")
-    val firstAirDate: String?,
     @SerializedName("genre_ids")
     val genreIds: List<Int>,
     val id: Int,
-    val name: String,
-    @SerializedName("origin_country")
-    val originCountry: List<String>,
     @SerializedName("original_language")
     val originalLanguage: String,
-    @SerializedName("original_name")
+    @SerializedName("original_title")
     val originalName: String,
     val overview: String,
     val popularity: Double,
     @SerializedName("poster_path")
     val posterPath: String?,
+    @SerializedName("release_date")
+    val releaseDate: String,
+    val video: Boolean,
     @SerializedName("vote_average")
     val voteAverage: Double,
     @SerializedName("vote_count")
@@ -32,9 +31,9 @@ data class MovieDto(
 
 fun MovieDto.toMovie() = Movie(
     id = id,
-    name = name.takeIf { it.isEmpty().not() } ?: originalName,
+    name = originalName,
     vote = voteAverage,
     posterPath = posterPath,
     overview = overview,
-    date = firstAirDate
+    date = releaseDate
 )
