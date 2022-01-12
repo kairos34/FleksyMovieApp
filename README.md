@@ -1,11 +1,21 @@
-# FleksyMovieApp
-The Movie Database API integration application that lists popular/highest-rated movies and shows similar movies with selected movie in detail screen. It also has dark/light theme switching feature.
+# FleksyMovieApp :tv:
 
-MVVM pattern used with Kotlin Flows as reactive programming library and Hilt as depencendy injection library, also Clean Code paradigm followed with SOLID principles using lots of Interfaces(to make it less dependent) and UseCases. Jetpack Compose Navigation used to navigate between screens. Unit tests written using MockWebServer(to simulate fake API Service) library.
+The aim of this app is to replicate the high level functionality of www.themoviedb.org and showcase an android app out of it.
+It connects with [TMDB_API](https://www.themoviedb.org/) to give you top rated movies and show similar movies with selected one.
+FleksyMovieApp consists of 2 pieces of UI right now:
+1. Home with Top Rated Movies
+2. Similar Movies with selected one
 
-<img src="FleksyMovieApp.gif" width="270" height="570"/>
+*Note: FleksyMovieApp is an unofficial app built only for learning and sharing the latest concepts with #AndroidDevs*
+
+<img src="screenshots/FleksyMovieApp.gif" width="270" height="570"/>
+
+## MAD Score
+
+<img src="screenshots/mad_summary.png" width="400">
 
 ## Building the app
+
 1.Open local.properties in the root directory
 
 2.Add your [TMDB](https://www.themoviedb.org/) API key as follows
@@ -17,6 +27,7 @@ MVVM pattern used with Kotlin Flows as reactive programming library and Hilt as 
 `If you want to play with release flavor, you have to create your own signature!!!`
 
 ## Used Libraries 
+
 - Jetpack Compose https://developer.android.com/jetpack/compose
 - UI Pager https://google.github.io/accompanist/pager/
 - Lottie Animation https://github.com/airbnb/lottie-android
@@ -25,3 +36,27 @@ MVVM pattern used with Kotlin Flows as reactive programming library and Hilt as 
 - Retrofit https://square.github.io/retrofit/
 - MockWebServer https://github.com/square/okhttp/tree/master/mockwebserver
 - LeakCanary https://square.github.io/leakcanary/fundamentals/
+
+## License
+
+```
+Copyright (c) 2021 Alper Özaslan
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
