@@ -10,6 +10,27 @@ FleksyMovieApp consists of 2 pieces of UI right now:
 
 <img src="screenshots/FleksyMovieApp.gif" width="270" height="570"/>
 
+## Android Development and Architecture
+Project is based on MVVM with Clean Architecture and SOLID principle using Repository Pattern with UseCases.
+Fully written in Kotlin using Android Jetpack components and libraries.
+App implements "Single Activity - multiple Fragments" navigation pattern using Android Jetpack Compose.
+
+Android Jetpack Architecture Components used:
+- ViewModel
+- LifeCycle  
+- Navigation component
+- Paging v3
+
+Dependency injection:
+- Dagger Hilt
+
+Kotlin libraries:
+- Kotlin Coroutines (with Flows)
+- various ktx extensions
+
+Testing: 
+- Unit tests (with JUnit, MockWebServer)
+
 ## MAD Score
 
 <img src="screenshots/mad_summary.png" width="800">
