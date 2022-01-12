@@ -12,7 +12,7 @@ FleksyMovieApp consists of 2 pieces of UI right now:
 
 ## MAD Score
 
-<img src="screenshots/mad_summary.png" width="400">
+<img src="screenshots/mad_summary.png" width="800">
 
 ## Building the app
 
